@@ -1,0 +1,55 @@
+basePath: /
+definitions:
+  models.Mutant:
+    properties:
+      dna:
+        items:
+          type: string
+        type: array
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: API Restful
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Mutant Go Api
+  version: "1.0"
+paths:
+  /mutant:
+    post:
+      consumes:
+      - application/json
+      description: recibe un json y devuelve si es un mutante o no
+      parameters:
+      - description: Datos necesarios para dar de alta un humano
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Mutant'
+      produces:
+      - application/json
+      responses:
+        "200": {}
+        "403": {}
+        "404": {}
+        "500": {}
+  /stats:
+    get:
+      consumes:
+      - application/json
+      description: devuelve la información general de todos los humanos cargados
+      produces:
+      - application/json
+      responses:
+        "200": {}
+        "403": {}
+        "404": {}
+        "500": {}
+swagger: "2.0"

@@ -1,0 +1,80 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API Restful",
+        "title": "Mutant Go Api",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/mutant": {
+            "post": {
+                "description": "recibe un json y devuelve si es un mutante o no",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "description": "Datos necesarios para dar de alta un humano",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Mutant"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {},
+                    "403": {},
+                    "404": {},
+                    "500": {}
+                }
+            }
+        },
+        "/stats": {
+            "get": {
+                "description": "devuelve la información general de todos los humanos cargados",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {},
+                    "403": {},
+                    "404": {},
+                    "500": {}
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Mutant": {
+            "type": "object",
+            "properties": {
+                "dna": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
