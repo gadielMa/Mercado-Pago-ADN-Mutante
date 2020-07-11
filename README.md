@@ -4,7 +4,8 @@
 
 API RESTful instanciada en [Google Cloud Platform](https://cloud.google.com/) para obtener información de cadenas ribonucleicas
 sobre ADN de mutantes.
-Consta de dos (2), [POST] `/mutant` para postear una cadena y conocer si es un mutante y [GET] `/stats` para obtener el total
+Consta de dos (2):
+[POST] `/mutant` para postear una cadena y conocer si es un mutante y [GET] `/stats` para obtener el total
 de humanos cargados.
 
 La base de datos es un MongoDb instanciado en [Cloud Mongo](https://cloud.mongodb.com/)
@@ -63,4 +64,5 @@ Para llamar al endpoint `/mutant` enviar un json similar a:
         "CCCCTA",
         "TCACTG"
     ]
-}```
+}
+```

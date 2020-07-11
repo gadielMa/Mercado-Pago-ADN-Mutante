@@ -1,12 +1,8 @@
 package main
 
 import (
-	"github.com/gadielMa/test/controller"
-	_ "github.com/gadielMa/test/docs"
+	api "github.com/gadielMa/test/controller"
 	"github.com/gin-gonic/gin"
-
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 /*
@@ -43,10 +39,6 @@ import (
 
 func main() {
 	router := gin.Default()
-
-	router.POST("/mutant", controller.Mutant)
-	router.GET("/stats", controller.Stats)
-	router.GET("/api/doc/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
+	api.SetupRouter(router)
 	router.Run()
 }

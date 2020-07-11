@@ -1,14 +1,93 @@
 package controller
 
 import (
+	"net/http"
+	"net/http/httptest"
+	"strings"
 	"testing"
 
+	"github.com/gadielMa/test/models"
+	"github.com/gin-gonic/gin"
 	"github.com/go-playground/assert/v2"
 )
 
-// TESTING 80%
+func TestMutant(t *testing.T) {
+	router := gin.Default()
+	SetupRouter(router)
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("POST", "/mutant", strings.NewReader(`{
+		"dna": [
+				"TTGCGA",
+				"CAGTGC",
+				"TTATGT",
+				"AAAAGG",
+				"CTCCTA",
+				"TCACTG"
+			]
+		}`))
+	router.ServeHTTP(w, req)
 
-// go test -cover
+	assert.Equal(t, 200, w.Code)
+}
+
+func TestMutant2(t *testing.T) {
+	router := gin.Default()
+	SetupRouter(router)
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("POST", "/mutant", strings.NewReader(`{
+		"dna": [
+				"XXXXXX",
+				"CAGTGC",
+				"TTATGT",
+				"AATAGG",
+				"CTCCTA",
+				"TCACTG"
+			]
+		}`))
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, 400, w.Code)
+}
+
+func TestMutant3(t *testing.T) {
+	router := gin.Default()
+	SetupRouter(router)
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("POST", "/mutant", strings.NewReader(`{
+		"dna": [
+				"TTGCGA",
+				"CAGTGC",
+				"TTATGT",
+				"ATAAGG",
+				"CTCCTA",
+				"TCACTG"
+			]
+		}`))
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, 403, w.Code)
+}
+
+func TestStats(t *testing.T) {
+	router := gin.Default()
+	SetupRouter(router)
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/stats", nil)
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, 200, w.Code)
+}
+func TestIsMutant(t *testing.T) {
+	mutant := models.Mutant{Dna: []string{"ABCDEF", "ABCDEF", "ABCDEF", "ABCDEF", "ABCDEF", "ABCDEF"}}
+	assert.Equal(t, true, isMutant(mutant))
+
+}
+
+func TestIsMutant2(t *testing.T) {
+	mutant := models.Mutant{Dna: []string{"QWERTY", "ASDFGH", "ZXCVBN", "ABCDEF", "ABCDEF", "ABCDEF"}}
+	assert.Equal(t, false, isMutant(mutant))
+
+}
 
 func TestProteinToSequence(t *testing.T) {
 	assert.Equal(t, "AAAA", proteinToSequence("A"))
@@ -30,7 +109,15 @@ func TestDnaObliqueToHorizontal(t *testing.T) {
 }
 
 func TestDnaObliqueToHorizontal2(t *testing.T) {
-	assert.Equal(t, "CGCTC", dnaObliqueToHorizontal([]string{"ATGCGA", "CAGTGC", "TTATTT", "AGACGG", "GCGTCA", "TCACTG"}, 0)[3])
+	assert.Equal(t, "AGTGT", dnaObliqueToHorizontal([]string{"ATGCGA", "CAGTGC", "TTATTT", "AGACGG", "GCGTCA", "TCACTG"}, 1)[3])
+}
+
+func TestGenerateArrayOfStrings(t *testing.T) {
+	assert.Equal(t, generateArrayOfStrings(2), []string{"", ""})
+}
+
+func TestGenerateArrayOfStrings2(t *testing.T) {
+	assert.Equal(t, generateArrayOfStrings(6), []string{"", "", "", "", "", ""})
 }
 
 func TestDiagonal(t *testing.T) {

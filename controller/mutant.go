@@ -96,7 +96,7 @@ func isMutant(mutant models.Mutant) bool {
 }
 
 // cuantas sequences horizontales "XXXX" tiene un dna
-func numberOfSequences(dna []string, c chan int) {
+func numberOfSequences(dna []string, c chan int) int {
 	var total int
 	for _, sequence := range dna {
 		for _, protein := range proteins {
@@ -106,6 +106,7 @@ func numberOfSequences(dna []string, c chan int) {
 		}
 	}
 	c <- total
+	return total
 }
 
 // convierte un char "A" a "AAAA"
@@ -132,14 +133,6 @@ func dnaVerticalToHorizontal(dna []string) []string {
 	return dnaHorizontal
 }
 
-func generateArrayOfStrings(size int) []string {
-	var dnaHorizontal = []string{}
-	for a := 0; a < size; a++ {
-		dnaHorizontal = append(dnaHorizontal, "")
-	}
-	return dnaHorizontal
-}
-
 // recibe como parametro el dna y una dirección oblicua normal o invertida
 func dnaObliqueToHorizontal(dna []string, direction int) []string {
 	dnaHorizontalLength := adnLength*2 - 1 - ((sequenceLength - 1) * 2)
@@ -158,6 +151,14 @@ func dnaObliqueToHorizontal(dna []string, direction int) []string {
 		}
 	}
 
+	return dnaHorizontal
+}
+
+func generateArrayOfStrings(size int) []string {
+	var dnaHorizontal = []string{}
+	for a := 0; a < size; a++ {
+		dnaHorizontal = append(dnaHorizontal, "")
+	}
 	return dnaHorizontal
 }
 

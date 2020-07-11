@@ -27,7 +27,12 @@ func Stats(ctx *gin.Context) {
 	var response response
 	response.CountHumanDna = db.GetHumans()
 	response.CountMutantDna = db.GetMutants()
-	response.Ratio = float64(response.CountMutantDna) / float64(response.CountHumanDna)
+
+	if response.CountHumanDna != 0 {
+		response.Ratio = float64(response.CountMutantDna) / float64(response.CountHumanDna)
+	} else {
+		response.Ratio = 0
+	}
 
 	ctx.JSON(http.StatusOK, response)
 	return
